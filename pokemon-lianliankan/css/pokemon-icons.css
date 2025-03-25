@@ -1,0 +1,122 @@
+/* 宠物小精灵图标样式 */
+.element-icon {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 各个宠物小精灵的图标 - 使用颜色块作为备用 */
+.element-1 {
+    background-image: url('../assets/images/pokemon/pikachu.png');
+    background-color: #ffcc00; /* 皮卡丘黄色 */
+}
+
+.element-2 {
+    background-image: url('../assets/images/pokemon/squirtle.png');
+    background-color: #3498db; /* 杰尼龟蓝色 */
+}
+
+.element-3 {
+    background-image: url('../assets/images/pokemon/bulbasaur.png');
+    background-color: #2ecc71; /* 妙蛙种子绿色 */
+}
+
+.element-4 {
+    background-image: url('../assets/images/pokemon/charmander.png');
+    background-color: #e74c3c; /* 小火龙红色 */
+}
+
+.element-5 {
+    background-image: url('../assets/images/pokemon/mewtwo.png');
+    background-color: #9b59b6; /* 超梦紫色 */
+}
+
+.element-6 {
+    background-image: url('../assets/images/pokemon/snorlax.png');
+    background-color: #7f8c8d; /* 卡比兽灰色 */
+}
+
+.element-7 {
+    background-image: url('../assets/images/pokemon/jigglypuff.png');
+    background-color: #ff80ab; /* 胖丁粉色 */
+}
+
+.element-8 {
+    background-image: url('../assets/images/pokemon/gengar.png');
+    background-color: #5e35b1; /* 耿鬼深紫色 */
+}
+
+.element-9 {
+    background-image: url('../assets/images/pokemon/psyduck.png');
+    background-color: #f1c40f; /* 可达鸭黄色 */
+}
+
+.element-10 {
+    background-image: url('../assets/images/pokemon/eevee.png');
+    background-color: #a1887f; /* 伊布棕色 */
+}
+
+.element-11 {
+    background-image: url('../assets/images/pokemon/steelix.png');
+    background-color: #90a4ae; /* 大钢蛇钢灰色 */
+}
+
+.element-12 {
+    background-image: url('../assets/images/pokemon/meowth.png');
+    background-color: #ffd54f; /* 喵喵米色 */
+}
+
+.element-13 {
+    background-image: url('../assets/images/pokemon/pidgeot.png');
+    background-color: #795548; /* 大比鸟棕色 */
+}
+
+.element-14 {
+    background-image: url('../assets/images/pokemon/mew.png');
+    background-color: #f48fb1; /* 梦幻粉色 */
+}
+
+.element-15 {
+    background-image: url('../assets/images/pokemon/wartortle.png');
+    background-color: #4fc3f7; /* 卡咪龟蓝色 */
+}
+
+.element-16 {
+    background-image: url('../assets/images/pokemon/geodude.png');
+    background-color: #8d6e63; /* 小拳石棕灰色 */
+}
+
+/* 选中状态 */
+.cell.selected .element-icon {
+    box-shadow: 0 0 15px 5px #ffcc00;
+    transform: scale(1.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 匹配状态 */
+.cell.matched .element-icon {
+    opacity: 0.3;
+    filter: grayscale(100%);
+    transform: scale(0.9);
+    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+}
+
+/* 提示效果 */
+.cell.hint .element-icon {
+    animation: hint-pulse 1.2s infinite;
+}
+
+@keyframes hint-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.8); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+}
