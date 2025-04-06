@@ -1,0 +1,214 @@
+/* 游戏动画效果 */
+
+/* 元素选中动画 */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(78, 115, 223, 0.7); }
+    50% { transform: scale(1.1); box-shadow: 0 0 15px 5px rgba(78, 115, 223, 0.7); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(78, 115, 223, 0.7); }
+}
+
+/* 提示动画 */
+@keyframes hint-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+}
+
+/* 匹配成功动画 */
+@keyframes match-success {
+    0% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.1); opacity: 0; }
+}
+
+/* 连接线动画 */
+@keyframes draw-line {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* 按钮悬停动画 */
+@keyframes button-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* 成就解锁动画 */
+@keyframes achievement-unlock {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 游戏开始动画 */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 游戏结束动画 */
+@keyframes slide-in {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 分数增加动画 */
+@keyframes score-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); color: #ffcc00; }
+    100% { transform: scale(1); }
+}
+
+/* 应用动画到元素 */
+.cell.selected .element-icon {
+    animation: pulse 1.5s infinite;
+}
+
+.cell.hint .element-icon {
+    animation: hint-pulse 1.2s infinite;
+}
+
+.cell.matched .element-icon {
+    animation: match-success 0.5s forwards;
+}
+
+.connection-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 0.5s forwards;
+}
+
+.btn:hover {
+    animation: button-pulse 0.5s infinite;
+}
+
+.achievement-item.unlocked {
+    animation: achievement-unlock 1s forwards;
+}
+
+.game-board {
+    animation: fade-in 0.8s;
+}
+
+.game-message.active {
+    animation: slide-in 0.5s forwards;
+}
+
+.score-increase {
+    animation: score-pop 0.5s;
+}
+
+/* 动画效果 */
+
+/* 点击波纹效果 */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 晃动动画 */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* 得分动画 */
+.score-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1cc88a;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 1;
+    transition: all 1s ease;
+    z-index: 200;
+    text-shadow: 0 0 5px rgba(255,255,255,0.8);
+}
+
+/* 星星脉动动画 */
+@keyframes star-pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+}
+
+/* 路径动画 */
+@keyframes dash {
+    to {
+        stroke-dashoffset: 20;
+    }
+}
+
+/* 洗牌动画 */
+.shuffling {
+    transition: transform 0.5s ease;
+}
+
+/* 游戏结束倒计时 */
+.ending-countdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: bold;
+    color: #4e73df;
+    z-index: 500;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+.pulse {
+    animation: pulse-animation 1s ease-in-out;
+}
+
+@keyframes pulse-animation {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* 连击显示 */
+.combo-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    font-weight: bold;
+    color: #e94560;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    z-index: 300;
+    display: none;
+}
+
+@keyframes combo-animation {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* 移动设备动画优化 */
+@media (max-width: 480px) {
+    .ending-countdown {
+        font-size: 60px;
+    }
+}

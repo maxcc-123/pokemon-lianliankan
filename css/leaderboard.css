@@ -1,0 +1,147 @@
+/* 排行榜系统样式 */
+
+/* 排行榜容器 */
+.leaderboard-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.leaderboard-difficulty-selector {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.leaderboard-difficulty-btn {
+    padding: 8px 15px;
+    margin: 0 5px;
+    background-color: #e9ecef;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.leaderboard-difficulty-btn.active {
+    background-color: #4e73df;
+    color: white;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.leaderboard-table th {
+    background-color: #f8f9fc;
+    font-weight: bold;
+}
+
+.rank-first {
+    color: #f6c23e;
+    font-weight: bold;
+}
+
+.rank-second {
+    color: #858796;
+    font-weight: bold;
+}
+
+.rank-third {
+    color: #e74a3b;
+    font-weight: bold;
+}
+
+.empty-leaderboard {
+    text-align: center;
+    padding: 20px;
+    color: #858796;
+}
+
+.player-name-input {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-name-input label {
+    margin-right: 10px;
+}
+
+.player-name-input input {
+    padding: 8px;
+    border: 1px solid #d1d3e2;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.player-name-input button {
+    padding: 8px 15px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-leaderboard-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 20px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-leaderboard-btn:hover {
+    background-color: #2e59d9;
+}
+
+.leaderboard-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #4e73df;
+    transition: color 0.3s;
+}
+
+.leaderboard-btn:hover {
+    color: #2e59d9;
+}
+
+/* 移动设备优化 */
+@media (max-width: 480px) {
+    .player-name-input {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .player-name-input label,
+    .player-name-input input,
+    .player-name-input button {
+        width: 100%;
+        margin: 0;
+    }
+}

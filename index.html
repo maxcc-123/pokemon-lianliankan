@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝可梦连连看 - 网易云风格</title>
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- CSS加载器将动态加载CSS文件 -->
+    <script src="js/css-loader.js"></script>
+    <!-- 添加一个简单的脚本来检查图片加载错误 -->
+    <script>
+        window.addEventListener('load', function() {
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    console.error('图片加载失败:', this.src);
+                    // 设置一个默认图片或者显示图片名称
+                    this.style.display = 'none';
+                    const placeholder = document.createElement('div');
+                    placeholder.textContent = this.alt || '图片';
+                    placeholder.className = 'img-placeholder';
+                    this.parentNode.insertBefore(placeholder, this);
+                });
+            });
+        });
+    </script>
+    <style>
+        /* 添加一个占位符样式 */
+        .img-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333333;
+            color: #b3b3b3;
+            font-size: 14px;
+            width: 100%;
+            height: 100%;
+            min-height: 40px;
+            border-radius: 4px;
+        }
+        
+        /* 添加基本加载样式，确保页面在CSS加载前也有基本样式 */
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #222222;
+            color: #ffffff;
+            margin: 0;
+            padding: 15px;
+        }
+        
+        .game-container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            background-color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border: 1px solid #3c3c3c;
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加动画背景 -->
+    <div class="animated-background"></div>
+    
+    <div class="game-container">
+        <div class="game-header">
+            <!-- 修改logo路径，使用相对路径 -->
+            <img src="./assets/images/pokemon-logo.png" alt="宠物小精灵" class="game-logo" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png';">
+            <h1>宠物小精灵连连看</h1>
+        </div>
+        
+        <div class="game-info">
+            <div><i class="fas fa-clock"></i> 时间: <span id="timer">240</span>秒</div>
+            <div><i class="fas fa-star"></i> 分数: <span id="score">0</span></div>
+            <div><i class="fas fa-lightbulb"></i> 提示: <span id="hints">3</span></div>
+        </div>
+        
+        <div class="game-content">
+            <div class="game-main">
+                <div class="game-controls">
+                    <select id="difficulty-select">
+                        <option value="easy">简单模式</option>
+                        <option value="normal" selected>普通模式</option>
+                        <option value="hard">困难模式</option>
+                    </select>
+                    <button id="start-game-btn"><i class="fas fa-play"></i> 开始游戏</button>
+                    <button id="hint-btn"><i class="fas fa-lightbulb"></i> 提示</button>
+                    <button id="shuffle-btn"><i class="fas fa-random"></i> 洗牌</button>
+                    <button id="reset-btn"><i class="fas fa-redo"></i> 重置</button>
+                </div>
+                
+                <div class="game-board-container">
+                    <div class="game-board" id="game-board">
+                        <!-- 游戏板将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-sidebar">
+                <div class="achievements">
+                    <h2><i class="fas fa-trophy"></i> 成就</h2>
+                    <ul>
+                        <li>初次尝试 - 完成第一局游戏</li>
+                        <li>连击大师 - 连续匹配5对宠物</li>
+                        <li>闪电速度 - 30秒内完成一局</li>
+                    </ul>
+                </div>
+                
+                <div class="leaderboard">
+                    <h2><i class="fas fa-crown"></i> 排行榜</h2>
+                    <ol>
+                        <li>玩家1 - 1200</li>
+                        <li>玩家2 - 980</li>
+                        <li>玩家3 - 820</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-message" id="game-message">
+            <div class="game-message-content">
+                <h2>游戏结束!</h2>
+                <p>你的得分: <span id="final-score">0</span></p>
+                <button class="btn-again" id="play-again-btn">再玩一次</button>
+            </div>
+        </div>
+        
+        <div class="game-instructions">
+            <p>点击相同的宠物进行配对，连接路径不超过三根直线。消除所有宠物即可获胜！</p>
+        </div>
+    </div>
+    
+    <!-- 添加一个初始化图片的脚本 -->
+    <script>
+        // 确保游戏板中的图片能够正确加载
+        function initPokemonImages() {
+            // 创建一个测试图片元素
+            const testImg = document.createElement('img');
+            testImg.style.display = 'none';
+            testImg.src = './assets/images/pokemon/1.png';
+            testImg.onerror = function() {
+                console.log('本地宝可梦图片加载失败，将使用在线图片');
+                // 如果本地图片加载失败，设置一个全局变量使用在线图片
+                window.usePokemonAPI = true;
+            };
+            testImg.onload = function() {
+                console.log('本地宝可梦图片加载成功');
+                window.usePokemonAPI = false;
+            };
+            document.body.appendChild(testImg);
+        }
+        
+        // 页面加载完成后初始化图片
+        window.addEventListener('DOMContentLoaded', initPokemonImages);
+    </script>
+    
+    <!-- 游戏脚本 -->
+    <script src="js/game-core.js"></script>
+    <script src="js/game-path.js"></script>
+    <script src="js/game-effects.js"></script>
+    <script src="js/visual-effects.js"></script>
+    <script src="js/game-ui.js"></script>
+    <script src="js/game-events.js"></script>
+    <script src="js/game-init.js"></script>
+</body>
+</html>

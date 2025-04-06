@@ -1,0 +1,197 @@
+/* 布局优化样式 */
+
+/* 扩大游戏容器宽度 */
+.game-container {
+    max-width: 1300px; /* 进一步扩大宽度 */
+    width: 95%;
+    margin: 0 auto;
+    padding: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+/* 优化游戏板布局 */
+.game-board-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 15px;
+}
+
+.game-board {
+    width: 100%;
+    max-width: 950px; /* 增加游戏板最大宽度 */
+    margin: 0 auto;
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* 创建两列布局 */
+@media (min-width: 1100px) {
+    .game-content {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 25px;
+    }
+    
+    .game-sidebar {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        align-self: start;
+        position: sticky;
+        top: 20px;
+    }
+}
+
+/* 优化游戏控制区域 */
+.game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    justify-content: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.game-controls button, 
+.game-controls select {
+    min-width: 110px;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.game-controls button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.game-controls select {
+    background: white;
+    color: #4e73df;
+    border: 2px solid #4e73df;
+    font-weight: 500;
+}
+
+/* 优化游戏信息区域 */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-info div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+}
+
+.game-info i {
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* 添加游戏标题区域的渐变背景 */
+.game-header {
+    background: linear-gradient(135deg, rgba(78, 115, 223, 0.1), rgba(78, 115, 223, 0.05));
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.game-header h1 {
+    margin: 0;
+    color: #4e73df;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-logo {
+    height: 60px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 15px;
+        width: 98%;
+    }
+    
+    .game-info div {
+        font-size: 16px;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .game-controls button, 
+    .game-controls select {
+        flex: 1 0 calc(50% - 15px);
+        min-width: 0;
+    }
+}
+
+/* 游戏单元格样式优化 */
+.cell {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* 游戏说明区域 */
+.game-instructions {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(78, 115, 223, 0.1);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #5a5c69;
+    text-align: center;
+    line-height: 1.5;
+}

@@ -1,0 +1,8 @@
+c:\Users\WU\Desktop\pokemon-lianliankan\
+└── assets\
+    └── images\
+        └── pokemon\
+            ├── pikachu.png
+            ├── squirtle.png
+            ├── bulbasaur.png
+            └── ...其他图片

@@ -1,0 +1,71 @@
+/* 主题相关样式 */
+
+/* 暗色主题 */
+body.dark-theme {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+body.dark-theme .game-container {
+    background-color: #16213e;
+}
+
+body.dark-theme .cell {
+    background-color: #0f3460;
+}
+
+body.dark-theme .card-back {
+    background-color: #1a1a2e;
+}
+
+body.dark-theme .game-controls button,
+body.dark-theme .game-controls select {
+    background-color: #e94560;
+    color: white;
+}
+
+body.dark-theme .progress-container {
+    background-color: #16213e;
+}
+
+body.dark-theme .path-line {
+    stroke: #e94560;
+}
+
+/* 暗色主题模态框 */
+body.dark-theme .achievements-container,
+body.dark-theme .leaderboard-container,
+body.dark-theme .achievement-notification,
+body.dark-theme .modal-content {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+body.dark-theme .achievement-item:hover {
+    background-color: #16213e;
+}
+
+body.dark-theme .achievement-description,
+body.dark-theme .achievement-notification-description {
+    color: #d1d3e2;
+}
+
+body.dark-theme .leaderboard-table th {
+    background-color: #16213e;
+}
+
+body.dark-theme .leaderboard-table td {
+    border-bottom: 1px solid #16213e;
+}
+
+body.dark-theme .empty-leaderboard {
+    color: #d1d3e2;
+}
+
+body.dark-theme .player-name-input input {
+    background-color: #0f3460;
+    border-color: #16213e;
+    color: #f0f0f0;
+}
+
+/* 其他主题可以在这里添加 */

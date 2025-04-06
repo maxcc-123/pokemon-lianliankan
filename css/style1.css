@@ -1,0 +1,925 @@
+/* 游戏主样式 */
+:root {
+    --primary-color: #3F51B5; /* 更改为宝可梦蓝色 */
+    --primary-dark: #303F9F;
+    --secondary-color: #f8f9fc;
+    --accent-color: #FFC107; /* 添加宝可梦黄色作为强调色 */
+    --text-color: #333;
+    --light-text: #6e707e;
+    --border-color: #e3e6f0;
+    --success-color: #1cc88a;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --border-radius: 10px;
+    --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background-color: #EEF5FE; /* 更柔和的背景色 */
+    /* 暂时注释掉背景图片，确保基本布局正常显示 */
+    /* background-image: url('../assets/images/pokemon-pattern.png'); */
+    background-size: 200px;
+    background-attachment: fixed;
+    /* background-opacity 不是有效的CSS属性，改为使用rgba背景色 */
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+/* 基础布局样式 - 确保与HTML结构匹配 */
+.game-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    position: relative;
+}
+
+/* 游戏标题区域 */
+.game-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* 游戏信息区域 */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.game-info div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* 游戏控制区域 */
+.game-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+select, button {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* 游戏板区域 */
+.game-board-container {
+    margin-bottom: 20px;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 8px;
+    margin: 0 auto;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cell:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* 游戏结束消息 */
+.game-message {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.game-message h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* 再玩一次按钮 */
+.btn-again {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* 成就和排行榜区域 */
+.achievements, .leaderboard {
+    margin-top: 30px;
+}
+
+.achievements h2, .leaderboard h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.achievements h2::before {
+    content: "🏆";
+    margin-right: 8px;
+}
+
+.leaderboard h2::before {
+    content: "👑";
+    margin-right: 8px;
+}
+
+.achievements ul, .leaderboard ol {
+    list-style-position: inside;
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+.achievements li, .leaderboard li {
+    padding: 5px 0;
+}
+
+/* 游戏说明 */
+.game-instructions {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-board {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* 卡片翻转效果 */
+.icon-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.icon-container.flipped {
+    transform: rotateY(180deg);
+}
+
+.element-icon, .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.card-back img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+}
+
+/* 点击波纹效果 */
+.cell {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 晃动动画 */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* 进度条样式 */
+.progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4e73df;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* 得分动画 */
+.score-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1cc88a;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 1;
+    transition: all 1s ease;
+    z-index: 200;
+    text-shadow: 0 0 5px rgba(255,255,255,0.8);
+}
+
+/* 游戏模态框 */
+.game-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.game-modal.active {
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.game-modal.active .modal-content {
+    transform: scale(1);
+}
+
+.win-stars {
+    margin: 20px 0;
+    font-size: 30px;
+    color: #f6c23e;
+}
+
+.win-stars i {
+    margin: 0 5px;
+    animation: star-pulse 1s infinite alternate;
+}
+
+.win-stars i:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.win-stars i:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes star-pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+}
+
+.final-score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4e73df;
+}
+
+.play-again-btn, .share-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.play-again-btn {
+    background-color: #4e73df;
+    color: white;
+    margin-right: 10px;
+}
+
+.play-again-btn:hover {
+    background-color: #2e59d9;
+}
+
+.share-btn {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.share-btn:hover {
+    background-color: #13a673;
+}
+
+/* 主题切换和声音按钮 */
+.theme-toggle, .sound-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #4e73df;
+    transition: color 0.3s;
+}
+
+.theme-toggle:hover, .sound-toggle:hover {
+    color: #2e59d9;
+}
+
+/* 暗色主题 */
+body.dark-theme {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+body.dark-theme .game-container {
+    background-color: #16213e;
+}
+
+body.dark-theme .cell {
+    background-color: #0f3460;
+}
+
+body.dark-theme .card-back {
+    background-color: #1a1a2e;
+}
+
+body.dark-theme .game-controls button,
+body.dark-theme .game-controls select {
+    background-color: #e94560;
+    color: white;
+}
+
+body.dark-theme .progress-container {
+    background-color: #16213e;
+}
+
+/* 路径动画 */
+@keyframes dash {
+    to {
+        stroke-dashoffset: 20;
+    }
+}
+
+/* 洗牌动画 */
+.shuffling {
+    transition: transform 0.5s ease;
+}
+
+/* 游戏结束倒计时 */
+.ending-countdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: bold;
+    color: #4e73df;
+    z-index: 500;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+.pulse {
+    animation: pulse-animation 1s ease-in-out;
+}
+
+@keyframes pulse-animation {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* 成就系统 */
+.achievements-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.achievement-item:hover {
+    background-color: #f8f9fc;
+}
+
+.achievement-icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.achievement-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.achievement-status {
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.achievement-item.unlocked .achievement-status {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.achievement-item.locked .achievement-status {
+    background-color: #e9ecef;
+    color: #666;
+}
+
+.close-achievements-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 20px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-achievements-btn:hover {
+    background-color: #2e59d9;
+}
+
+.achievements-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #4e73df;
+    transition: color 0.3s;
+}
+
+.achievements-btn:hover {
+    color: #2e59d9;
+}
+
+/* 成就通知 */
+.achievement-notification {
+    position: fixed;
+    top: 20px;
+    right: -300px;
+    width: 280px;
+    background-color: white;
+    border-left: 5px solid #1cc88a;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: right 0.5s ease;
+    z-index: 1100;
+}
+
+.achievement-notification.show {
+    right: 20px;
+}
+
+.achievement-notification-icon {
+    font-size: 30px;
+    margin-right: 15px;
+}
+
+.achievement-notification-content {
+    flex: 1;
+}
+
+.achievement-notification-title {
+    font-weight: bold;
+    color: #1cc88a;
+    margin-bottom: 5px;
+}
+
+.achievement-notification-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.achievement-notification-description {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 排行榜系统 */
+.leaderboard-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.leaderboard-difficulty-selector {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.leaderboard-difficulty-btn {
+    padding: 8px 15px;
+    margin: 0 5px;
+    background-color: #e9ecef;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.leaderboard-difficulty-btn.active {
+    background-color: #4e73df;
+    color: white;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.leaderboard-table th {
+    background-color: #f8f9fc;
+    font-weight: bold;
+}
+
+.rank-first {
+    color: #f6c23e;
+    font-weight: bold;
+}
+
+.rank-second {
+    color: #858796;
+    font-weight: bold;
+}
+
+.rank-third {
+    color: #e74a3b;
+    font-weight: bold;
+}
+
+.empty-leaderboard {
+    text-align: center;
+    padding: 20px;
+    color: #858796;
+}
+
+.player-name-input {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-name-input label {
+    margin-right: 10px;
+}
+
+.player-name-input input {
+    padding: 8px;
+    border: 1px solid #d1d3e2;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.player-name-input button {
+    padding: 8px 15px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-leaderboard-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 20px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-leaderboard-btn:hover {
+    background-color: #2e59d9;
+}
+
+.leaderboard-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #4e73df;
+    transition: color 0.3s;
+}
+
+.leaderboard-btn:hover {
+    color: #2e59d9;
+}
+
+/* 暗色主题适配 */
+body.dark-theme .achievements-container,
+body.dark-theme .leaderboard-container,
+body.dark-theme .achievement-notification {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+body.dark-theme .achievement-item:hover {
+    background-color: #16213e;
+}
+
+body.dark-theme .achievement-description,
+body.dark-theme .achievement-notification-description {
+    color: #d1d3e2;
+}
+
+body.dark-theme .leaderboard-table th {
+    background-color: #16213e;
+}
+
+body.dark-theme .leaderboard-table td {
+    border-bottom: 1px solid #16213e;
+}
+
+body.dark-theme .empty-leaderboard {
+    color: #d1d3e2;
+}
+
+body.dark-theme .player-name-input input {
+    background-color: #0f3460;
+    border-color: #16213e;
+    color: #f0f0f0;
+}
+
+/* 连击显示 */
+.combo-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    font-weight: bold;
+    color: #e94560;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    z-index: 300;
+    display: none;
+}
+
+@keyframes combo-animation {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* 路径连接线 */
+.path-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.path-line {
+    stroke: #4e73df;
+    stroke-width: 3;
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 10;
+    stroke-dashoffset: 0;
+    animation: dash 1s linear infinite;
+}
+
+body.dark-theme .path-line {
+    stroke: #e94560;
+}
+
+/* 加载动画 */
+.loading-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top-color: #4e73df;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 游戏版本标签 */
+.version-tag {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #858796;
+    opacity: 0.7;
+}
+
+/* 移动设备优化 */
+@media (max-width: 480px) {
+    .game-modal .modal-content {
+        padding: 15px;
+    }
+    
+    .achievement-notification {
+        width: 90%;
+        right: -100%;
+    }
+    
+    .achievement-notification.show {
+        right: 5%;
+    }
+    
+    .ending-countdown {
+        font-size: 60px;
+    }
+    
+    .player-name-input {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .player-name-input label,
+    .player-name-input input,
+    .player-name-input button {
+        width: 100%;
+        margin: 0;
+    }
+}
