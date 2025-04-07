@@ -1,0 +1,350 @@
+/* 成就系统样式 */
+
+/* 成就面板 */
+.achievements {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 成就标签 */
+.achievement-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--netease-border);
+    padding-bottom: 10px;
+}
+
+.achievement-tab {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border-radius: 15px;
+    background-color: var(--netease-gray);
+    color: var(--netease-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    user-select: none;
+}
+
+.achievement-tab:hover {
+    background-color: var(--netease-dark);
+    color: var(--netease-text);
+}
+
+.achievement-tab.active {
+    background-color: var(--netease-red);
+    color: white;
+}
+
+/* 成就进度统计 */
+.achievement-progress-summary {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--netease-dark);
+    border-radius: 8px;
+    border: 1px solid var(--netease-border);
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--netease-gray);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--netease-red) 0%, var(--netease-red-hover) 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.8rem;
+    color: var(--netease-text-secondary);
+    text-align: right;
+}
+
+/* 成就列表项 */
+.achievements li {
+    position: relative;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.achievements li:hover {
+    background-color: var(--netease-dark);
+    transform: translateX(5px);
+}
+
+.achievements li i {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--netease-gray);
+    border-radius: 50%;
+    margin-right: 10px;
+    color: var(--netease-text-secondary);
+    transition: all 0.3s ease;
+}
+
+.achievements li.unlocked i {
+    background-color: var(--netease-red);
+    color: white;
+}
+
+.achievements li .achievement-name {
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.achievements li .achievement-description {
+    font-size: 0.85rem;
+    color: var(--netease-text-secondary);
+    margin-left: 5px;
+}
+
+.achievements li.unlocked .achievement-name {
+    color: var(--netease-red);
+}
+
+/* 成就解锁动画 */
+.achievements li.unlocking {
+    animation: achievement-unlock 1s ease;
+}
+
+@keyframes achievement-unlock {
+    0% { background-color: var(--netease-dark); }
+    50% { background-color: rgba(198, 47, 47, 0.3); }
+    100% { background-color: var(--netease-dark); }
+}
+
+.achievement-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shine-animation 1.5s ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes shine-animation {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+/* 成就详情模态框 */
+.achievement-detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.achievement-detail-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.achievement-detail-content {
+    background-color: var(--netease-dark);
+    border-radius: 10px;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+    border: 1px solid var(--netease-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.achievement-detail-modal.show .achievement-detail-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    color: var(--netease-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    color: var(--netease-text);
+    transform: rotate(90deg);
+}
+
+.achievement-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--netease-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.achievement-icon i {
+    font-size: 30px;
+    color: var(--netease-text-secondary);
+}
+
+.achievement-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--netease-red);
+}
+
+.achievement-description {
+    text-align: center;
+    color: var(--netease-text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.achievement-status {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.status-label {
+    color: var(--netease-text-secondary);
+    margin-right: 5px;
+}
+
+.status-value.unlocked {
+    color: var(--netease-red);
+    font-weight: 500;
+}
+
+.status-value.locked {
+    color: var(--netease-text-secondary);
+}
+
+/* 成就通知 */
+.achievement-notification {
+    position: fixed;
+    bottom: -100px;
+    right: 20px;
+    background-color: var(--netease-dark);
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    border: 1px solid var(--netease-border);
+    opacity: 0;
+}
+
+.achievement-notification.show {
+    bottom: 20px;
+    opacity: 1;
+}
+
+.achievement-notification-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--netease-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.achievement-notification-icon i {
+    color: white;
+    font-size: 20px;
+}
+
+.achievement-notification-content {
+    flex-grow: 1;
+}
+
+.achievement-notification-title {
+    font-size: 0.9rem;
+    color: var(--netease-text-secondary);
+    margin-bottom: 5px;
+}
+
+.achievement-notification-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--netease-red);
+    margin-bottom: 5px;
+}
+
+.achievement-notification-description {
+    font-size: 0.85rem;
+    color: var(--netease-text-secondary);
+}
+
+/* 成就星星效果 */
+.achievement-star {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--netease-red);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: star-animation 1.5s ease-out;
+}
+
+@keyframes star-animation {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .achievement-notification {
+        width: calc(100% - 40px);
+        right: 10px;
+    }
+    
+    .achievement-detail-content {
+        width: 95%;
+        padding: 20px;
+    }
+}

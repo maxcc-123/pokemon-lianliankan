@@ -546,3 +546,150 @@ if (typeof module !== 'undefined' && module.exports) {
     // 创建全局实例
     window.visualEffects = new VisualEffects();
 }
+
+/**
+ * 游戏视觉效果类
+ */
+class VisualEffects {
+    constructor(gameBoard) {
+        this.gameBoard = gameBoard;
+        this.pathOverlay = this.createPathOverlay();
+    }
+    
+    /**
+     * 创建路径覆盖层
+     * @returns {SVGElement} - SVG元素
+     */
+    createPathOverlay() {
+        const overlay = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        overlay.classList.add('path-overlay');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.zIndex = '100';
+        
+        this.gameBoard.parentNode.appendChild(overlay);
+        return overlay;
+    }
+    
+    /**
+     * 显示连接路径
+     * @param {Array} path - 路径点数组
+     */
+    showPath(path) {
+        // 清空现有路径
+        this.pathOverlay.innerHTML = '';
+        
+        if (!path || path.length < 2) return;
+        
+        // 获取单元格大小和位置
+        const cells = this.gameBoard.querySelectorAll('.cell');
+        if (!cells.length) return;
+        
+        const cellRect = cells[0].getBoundingClientRect();
+        const cellSize = cellRect.width;
+        const boardRect = this.gameBoard.getBoundingClientRect();
+        
+        // 创建路径
+        const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathElement.classList.add('path-line');
+        
+        // 构建路径数据
+        let pathData = '';
+        path.forEach((point, index) => {
+            const [row, col] = point;
+            const x = col * (cellSize + 8) + cellSize / 2; // 8是grid-gap
+            const y = row * (cellSize + 8) + cellSize / 2;
+            
+            if (index === 0) {
+                pathData += `M ${x} ${y}`;
+            } else {
+                pathData += ` L ${x} ${y}`;
+            }
+        });
+        
+        pathElement.setAttribute('d', pathData);
+        pathElement.style.stroke = 'var(--netease-red)';
+        pathElement.style.strokeWidth = '3';
+        pathElement.style.strokeLinecap = 'round';
+        pathElement.style.fill = 'none';
+        
+        // 添加动画
+        const length = pathElement.getTotalLength();
+        pathElement.style.strokeDasharray = length;
+        pathElement.style.strokeDashoffset = length;
+        pathElement.style.animation = 'dash 0.5s linear forwards';
+        
+        // 添加到覆盖层
+        this.pathOverlay.appendChild(pathElement);
+        
+        // 添加动画关键帧
+        if (!document.querySelector('#path-animation')) {
+            const style = document.createElement('style');
+            style.id = 'path-animation';
+            style.textContent = `
+                @keyframes dash {
+                    to {
+                        stroke-dashoffset: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // 一段时间后移除路径
+        setTimeout(() => {
+            pathElement.style.opacity = '0';
+            setTimeout(() => {
+                this.pathOverlay.innerHTML = '';
+            }, 300);
+        }, 800);
+    }
+    
+    /**
+     * 创建成就解锁通知
+     * @param {string} title - 成就标题
+     * @param {string} description - 成就描述
+     */
+    createAchievementNotification(title, description) {
+        // 创建通知元素
+        const notification = document.createElement('div');
+        notification.className = 'achievement-notification';
+        
+        // 设置内容
+        notification.innerHTML = `
+            <div class="achievement-notification-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="achievement-notification-content">
+                <div class="achievement-notification-title">成就解锁!</div>
+                <div class="achievement-notification-name">${title}</div>
+                <div class="achievement-notification-description">${description}</div>
+            </div>
+        `;
+        
+        // 添加到文档
+        document.body.appendChild(notification);
+        
+        // 显示通知
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // 一段时间后隐藏并移除
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 500);
+        }, 5000);
+    }
+}
+
+// 导出类
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = VisualEffects;
+}

@@ -446,3 +446,71 @@ function initAchievements(gameCore) {
         }, 5000);
     }
 }
+
+/**
+ * 初始化游戏
+ */
+function initGame() {
+    // 创建游戏实例
+    const gameBoard = document.getElementById('game-board');
+    window.game = new Game(gameBoard);
+    
+    // 设置难度选择事件
+    const difficultySelect = document.getElementById('difficulty-select');
+    difficultySelect.addEventListener('change', function() {
+        window.game.setDifficulty(this.value);
+    });
+    
+    // 设置开始游戏按钮事件
+    const startGameBtn = document.getElementById('start-game-btn');
+    startGameBtn.addEventListener('click', function() {
+        window.game.startGame();
+        
+        // 确保所有卡片初始状态为背面朝上（宝可球）
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            const iconContainer = cell.querySelector('.icon-container');
+            if (iconContainer) {
+                iconContainer.classList.remove('flipped');
+            }
+        });
+    });
+    
+    // 设置提示按钮事件
+    const hintBtn = document.getElementById('hint-btn');
+    hintBtn.addEventListener('click', function() {
+        window.game.showHint();
+    });
+    
+    // 设置洗牌按钮事件
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    shuffleBtn.addEventListener('click', function() {
+        window.game.shuffleBoard();
+    });
+    
+    // 设置重置按钮事件
+    const resetBtn = document.getElementById('reset-btn');
+    resetBtn.addEventListener('click', function() {
+        window.game.resetGame();
+    });
+    
+    // 设置再玩一次按钮事件
+    const playAgainBtn = document.getElementById('play-again-btn');
+    playAgainBtn.addEventListener('click', function() {
+        const gameMessage = document.getElementById('game-message');
+        gameMessage.classList.remove('show');
+        setTimeout(() => {
+            window.game.resetGame();
+            window.game.startGame();
+        }, 300);
+    });
+    
+    // 初始化游戏
+    window.game.initBoard();
+}
+
+// 页面加载完成后初始化游戏
+window.addEventListener('DOMContentLoaded', function() {
+    // 延迟初始化，确保其他资源加载完成
+    setTimeout(initGame, 100);
+});

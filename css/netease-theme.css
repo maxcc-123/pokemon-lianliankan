@@ -13,6 +13,12 @@
     --netease-border: #3c3c3c;
     --netease-card: #2d2d2d;
     --netease-shadow: rgba(0, 0, 0, 0.3);
+    
+    /* 添加兼容旧代码的变量 */
+    --primary-color: #c62f2f;
+    --secondary-color: #333333;
+    --text-color: #ffffff;
+    --text-secondary: #b3b3b3;
 }
 
 /* 基础样式 */

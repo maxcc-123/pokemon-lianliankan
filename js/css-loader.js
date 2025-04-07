@@ -5,7 +5,8 @@
         'css/reset.css',
         'css/game-board.css',
         'css/enhanced-animations.css',
-        'css/netease-theme.css' // 添加网易云风格主题
+        'css/netease-theme.css',
+        'css/achievement-system.css' // 添加成就系统样式
     ];
     
     // 动态加载CSS文件

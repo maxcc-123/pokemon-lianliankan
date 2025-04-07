@@ -267,3 +267,206 @@ class GameCore {
 if (typeof module !== 'undefined') {
     module.exports = { GameCore };
 }
+
+
+/**
+ * 创建单个游戏单元格
+ * @param {number} row - 行索引
+ * @param {number} col - 列索引
+ * @param {number} value - 单元格值
+ * @returns {HTMLElement} - 创建的单元格元素
+ */
+createCell(row, col, value); {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.row = row;
+    cell.dataset.col = col;
+    cell.dataset.value = value;
+    
+    // 创建图标容器，用于翻转效果
+    const iconContainer = document.createElement('div');
+    iconContainer.className = 'icon-container';
+    
+    // 创建正面（宝可梦图像）
+    const elementIcon = document.createElement('div');
+    elementIcon.className = 'element-icon';
+    
+    // 创建宝可梦图像
+    const pokemonImg = document.createElement('img');
+    pokemonImg.alt = `Pokemon ${value}`;
+    
+    // 根据全局设置决定使用本地图片还是API图片
+    if (window.usePokemonAPI) {
+        pokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${value}.png`;
+    } else {
+        pokemonImg.src = `./assets/images/pokemon/${value}.png`;
+    }
+    
+    // 图片加载失败时的处理
+    pokemonImg.onerror = function() {
+        this.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${value}.png`;
+    };
+    
+    elementIcon.appendChild(pokemonImg);
+    
+    // 创建背面（宝可球）
+    const cardBack = document.createElement('div');
+    cardBack.className = 'card-back';
+    
+    const pokeballImg = document.createElement('img');
+    pokeballImg.src = './assets/images/pokeball.png';
+    pokeballImg.alt = 'Pokeball';
+    pokeballImg.onerror = function() {
+        this.src = 'https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeball.png';
+    };
+    
+    cardBack.appendChild(pokeballImg);
+    
+    // 将正反面添加到容器
+    iconContainer.appendChild(elementIcon);
+    iconContainer.appendChild(cardBack);
+    
+    // 将容器添加到单元格
+    cell.appendChild(iconContainer);
+    
+    return cell;
+}
+
+/**
+ * 选择单元格
+ * @param {HTMLElement} cell - 要选择的单元格
+ */
+selectCell(cell); {
+    // 如果游戏未开始或单元格已匹配，则不做任何操作
+    if (!this.gameStarted || cell.classList.contains('matched')) {
+        return;
+    }
+    
+    // 如果单元格已经被选中，则取消选择
+    if (cell.classList.contains('selected')) {
+        cell.classList.remove('selected');
+        // 移除翻转效果
+        const iconContainer = cell.querySelector('.icon-container');
+        if (iconContainer) {
+            iconContainer.classList.remove('flipped');
+        }
+        this.selectedCells = this.selectedCells.filter(c => c !== cell);
+        return;
+    }
+    
+    // 添加选中样式
+    cell.classList.add('selected');
+    
+    // 添加翻转效果 - 显示宝可梦图像
+    const iconContainer = cell.querySelector('.icon-container');
+    if (iconContainer) {
+        iconContainer.classList.add('flipped');
+    }
+    
+    // 添加到已选中数组
+    this.selectedCells.push(cell);
+    
+    // 如果已选中两个单元格，则检查是否匹配
+    if (this.selectedCells.length === 2) {
+        this.checkMatch();
+    }
+}
+
+/**
+ * 检查两个选中的单元格是否匹配
+ */
+checkMatch(); {
+    const [cell1, cell2] = this.selectedCells;
+    const value1 = cell1.dataset.value;
+    const value2 = cell2.dataset.value;
+    
+    // 如果值相同且不是同一个单元格
+    if (value1 === value2 && cell1 !== cell2) {
+        // 检查是否可以连接
+        const path = this.pathFinder.findPath(
+            parseInt(cell1.dataset.row), 
+            parseInt(cell1.dataset.col), 
+            parseInt(cell2.dataset.row), 
+            parseInt(cell2.dataset.col)
+        );
+        
+        if (path) {
+            // 匹配成功
+            this.handleMatchSuccess(cell1, cell2, path);
+        } else {
+            // 不能连接
+            this.handleMatchFailed();
+        }
+    } else {
+        // 值不同，匹配失败
+        this.handleMatchFailed();
+    }
+}
+
+/**
+ * 处理匹配成功
+ * @param {HTMLElement} cell1 - 第一个单元格
+ * @param {HTMLElement} cell2 - 第二个单元格
+ * @param {Array} path - 连接路径
+ */
+handleMatchSuccess(cell1, cell2, path); {
+    // 移除选中样式
+    cell1.classList.remove('selected');
+    cell2.classList.remove('selected');
+    
+    // 添加匹配样式
+    cell1.classList.add('matched');
+    cell2.classList.add('matched');
+    
+    // 保持翻转状态，不需要移除flipped类
+    
+    // 清空选中数组
+    this.selectedCells = [];
+    
+    // 更新游戏状态
+    this.matchedPairs++;
+    this.updateScore(10); // 基础分数
+    
+    // 显示连接路径
+    if (this.visualEffects) {
+        this.visualEffects.showPath(path);
+    }
+    
+    // 检查游戏是否结束
+    this.checkGameEnd();
+    
+    // 触发匹配成功事件
+    document.dispatchEvent(new CustomEvent('matchSuccess'));
+}
+
+/**
+ * 处理匹配失败
+ */
+handleMatchFailed(); {
+    // 获取选中的单元格
+    const [cell1, cell2] = this.selectedCells;
+    
+    // 移除选中样式
+    setTimeout(() => {
+        cell1.classList.remove('selected');
+        cell2.classList.remove('selected');
+        
+        // 移除翻转效果
+        const iconContainer1 = cell1.querySelector('.icon-container');
+        const iconContainer2 = cell2.querySelector('.icon-container');
+        
+        if (iconContainer1) iconContainer1.classList.remove('flipped');
+        if (iconContainer2) iconContainer2.classList.remove('flipped');
+        
+        // 清空选中数组
+        this.selectedCells = [];
+        
+        // 触发匹配失败事件
+        document.dispatchEvent(new CustomEvent('matchFailed'));
+    }, 1000); // 延迟一秒，让玩家看清楚
+}
+
+// 导出Game类
+if (typeof module !== 'undefined') {
+    module.exports = { Game };
+}
